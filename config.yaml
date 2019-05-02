@@ -10,9 +10,9 @@ adapter: ACGGATCGATCGATCGATCGAT
 
 ref:
   # the STAR index
-  index: "path/to/star/index"
+  index: "/rhome/jluis/bigdata/Tutorials/rna-seq_yeast/Mulla_elife_2017/star_index"
   # gtf file with transcripts
-  annotation: "path/to/annotation.gtf"
+  annotation: "/rhome/jluis/bigdata/Tutorials/rna-seq_yeast/Mulla_elife_2017/references/Saccharomyces_cerevisiae.R64-1-1.84.gtf"
 
 pca:
   labels:
@@ -22,11 +22,11 @@ pca:
 diffexp:
   # contrasts for the deseq2 results method
   contrasts:
-    treated-vs-untreated:
-      - treated
-      - untreated
+    Aneuploid-vs-Euploid:
+      - Aneuploid
+      - Euploid
 
 params:
   star: ""
-  cutadapt-se: ""
-  cutadapt-pe: ""
+  cutadapt-se: "-j 5"
+  cutadapt-pe: "-j 5"
