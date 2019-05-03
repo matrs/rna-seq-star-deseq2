@@ -1,3 +1,4 @@
+# still don't know how to use log from a python script, R script in the doc.
 rule count_matrix:
     input:
         expand("star/{unit.sample}-{unit.unit}/ReadsPerGene.out.tab", unit=units.itertuples())
@@ -7,9 +8,14 @@ rule count_matrix:
         samples=units["sample"].tolist()
     conda:
         "../envs/pandas.yaml"
+    log:
+        "logs/count_matrix.log"
     script:
         "../scripts/count-matrix.py"
 
+## `units` is a dataframe object with multi-index, sample names first and then UNIT1 (units columna from unit.tsv).
+print("units, units['sample'], type(unit),its columns and index", units, units["sample"], type(units),\
+    units.columns, units.index, sep="||||\n\n")
 
 def get_deseq2_threads(wildcards=None):
     # https://twitter.com/mikelove/status/918770188568363008

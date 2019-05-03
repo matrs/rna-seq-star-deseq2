@@ -22,10 +22,11 @@ pca:
 diffexp:
   # contrasts for the deseq2 results method
   contrasts:
-    Aneuploid-vs-Euploid:
-      - Aneuploid
-      - Euploid
-
+    AMB-Ctrl:
+      - AMB
+      - AMB_control
+      - AMBplusLF
+      - AMBplusLF_control
 params:
   star: ""
   cutadapt-se: "-j 5"

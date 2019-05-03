@@ -1,7 +1,7 @@
 def get_fastq(wildcards):
     return units.loc[(wildcards.sample, wildcards.unit), ["fq1", "fq2"]].dropna()
 
-
+ruleorder: cutadapt > cutadapt_pe
 rule cutadapt_pe:
     input:
         get_fastq
@@ -14,7 +14,7 @@ rule cutadapt_pe:
     log:
         "logs/cutadapt/{sample}-{unit}.log"
     wrapper:
-        "0.17.4/bio/cutadapt/pe"
+        "file:snakemake-wrappers/bio/cutadapt/pe"
 
 
 rule cutadapt:
@@ -26,6 +26,6 @@ rule cutadapt:
     params:
         "-a {} {}".format(config["adapter"], config["params"]["cutadapt-se"])
     log:
-        "logs/cutadapt/{sample}-{unit}.log"
+        "logs/cutadapt/{sample}-{unit}_se.log"
     wrapper:
-        "0.17.4/bio/cutadapt/se"
+        "file:snakemake-wrappers/bio/cutadapt/se"

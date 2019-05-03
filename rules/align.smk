@@ -9,7 +9,7 @@ def get_trimmed(wildcards):
 
 rule align:
     input:
-        sample=get_trimmed
+        fq1=get_trimmed
     output:
         # see STAR manual for additional output files
         "star/{sample}-{unit}/Aligned.out.bam",
@@ -22,6 +22,7 @@ rule align:
         # optional parameters
         extra="--quantMode GeneCounts --sjdbGTFfile {} {}".format(
               config["ref"]["annotation"], config["params"]["star"])
-    threads: 24
+    threads: 5
     wrapper:
-        "0.19.4/bio/star/align"
+        "file:snakemake-wrappers/star/align"
+        #"0.19.4/bio/star/align"

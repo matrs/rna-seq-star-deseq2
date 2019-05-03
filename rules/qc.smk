@@ -1,18 +1,20 @@
+
 ## RSEQC
+
+gtf_bed_script="/rhome/jluis/bigdata/Tutorials/rna-seq_yeast/Mulla_elife_2017/subsample/rna-seq-star-deseq2/gtf2bed_eautils.pl"
 
 rule rseqc_gtf2bed:
     input:
         config["ref"]["annotation"]
     output:
         bed="qc/rseqc/annotation.bed",
-        db=temp("qc/rseqc/annotation.db")
+        #db=temp("qc/rseqc/annotation.db")
     log:
         "logs/rseqc_gtf2bed.log"
     conda:
         "../envs/gffutils.yaml"
-    script:
-        "../scripts/gtf2bed.py"
-       
+    shell:
+        "perl {gtf_bed_script} {input} > {output.bed}"
   
 rule rseqc_junction_annotation:
     input:
@@ -143,10 +145,12 @@ rule rseqc_readgc:
         "../envs/rseqc.yaml"
     shell:
         "read_GC.py -i {input} -o {params.prefix} > {log} 2>&1"
-        
+
+
 
 rule multiqc:
     input:
+        #expand("logs/cutadapt/{unit.sample}-{unit.unit}.log", unit=units.itertuples()),
         expand("star/{unit.sample}-{unit.unit}/Aligned.out.bam", unit=units.itertuples()),
         expand("qc/rseqc/{unit.sample}-{unit.unit}.junctionanno.junction.bed", unit=units.itertuples()),
         expand("qc/rseqc/{unit.sample}-{unit.unit}.junctionsat.junctionSaturation_plot.pdf", unit=units.itertuples()),
@@ -156,10 +160,14 @@ rule multiqc:
         expand("qc/rseqc/{unit.sample}-{unit.unit}.readdistribution.txt", unit=units.itertuples()),
         expand("qc/rseqc/{unit.sample}-{unit.unit}.readdup.DupRate_plot.pdf", unit=units.itertuples()),
         expand("qc/rseqc/{unit.sample}-{unit.unit}.readgc.GC_plot.pdf", unit=units.itertuples()),
-        expand("logs/rseqc/rseqc_junction_annotation/{unit.sample}-{unit.unit}.log", unit=units.itertuples())
+        expand("logs/rseqc/rseqc_junction_annotation/{unit.sample}-{unit.unit}.log", unit=units.itertuples()),
+        #expand("logs/cutadapt/{unit.sample}-{unit.unit}.log", unit=units.itertuples()),
+        expand("trimmed/{unit.sample}-{unit.unit}.qc.txt", unit=units.itertuples())
     output:
         "qc/multiqc_report.html"
     log:
         "logs/multiqc.log"
+    conda:
+        "../envs/multiqc.yaml"
     wrapper:
-        "0.31.1/bio/multiqc"
+        "file:/rhome/jluis/bigdata/Tutorials/rna-seq_yeast/Mulla_elife_2017/rna-seq-star-deseq2/snakemake-wrappers/bio/multiqc"
