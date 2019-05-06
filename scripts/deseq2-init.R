@@ -32,14 +32,15 @@ print(coldata)
 
 dds <- DESeqDataSetFromMatrix(countData=cts,
                               colData=coldata,
-                              design=~ condition)
+                              design= ~ condition)
 print('snakemake@params[["samples"]]')
 print(snakemake@params[["samples"]])
-print("dds")
+print("dds object")
 print(dds)
 # remove uninformative columns
 dds <- dds[ rowSums(counts(dds)) > 1, ]
 # normalization and preprocessing
 dds <- DESeq(dds, parallel=parallel)
 
+##Save to `deseq2/all.rds`
 saveRDS(dds, file=snakemake@output[[1]])

@@ -16,11 +16,17 @@ if (snakemake@threads > 1) {
 dds <- readRDS(snakemake@input[[1]])
 
 #mine
-paste(list("snakemake@params str(): ", str(snakemake@params)), sep="\n")
+#paste(list("snakemake@params str(): ", str(snakemake@params)), sep="\n")
+print("This are the snakemake@params: ")
+print(snakemake@params)
+
 
 contrast <- c("condition", snakemake@params[["contrast"]])
 # mine
-paste("This is the contrast", contrast, sep=" || ")
+print("This is the contrast and its typeof:") 
+print(contrast) 
+print(typeof(contrast))
+
 res <- results(dds, contrast=contrast, parallel=parallel)
 print("res")
 print(res)
@@ -33,6 +39,7 @@ res <- res[order(res$padj),]
 print("res with ordered $padj")
 print(res)
 # TODO explore IHW usage
+# 
 print('snakemake@output[["table"]]')
 print(snakemake@output[["table"]])
 # store results
@@ -40,4 +47,8 @@ svg(snakemake@output[["ma_plot"]])
 plotMA(res, ylim=c(-2,2))
 dev.off()
 
-write.table(as.data.frame(res), file=snakemake@output[["table"]])
+#Saving table, better format, `row.names` are in a colum without name,  a "," is
+# added to the header to make it right.
+write.csv(as.data.frame(res), file=snakemake@output[["table"]], quote = FALSE)
+#this is from the `Snakefile` output.table:
+#"results/diffexp/{contrast}.diffexp.tsv"

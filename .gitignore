@@ -21,3 +21,4 @@ scripts/.snakemake*
 !.gitattributes
 !.test
 !.test/data
+.Rproj.user

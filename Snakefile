@@ -21,7 +21,7 @@ validate(units, schema="schemas/units.schema.yaml")
 
 rule all:
     input:
-        expand(["results/diffexp/{contrast}.diffexp.tsv",
+        expand(["results/diffexp/{contrast}.diffexp.csv",
                 "results/diffexp/{contrast}.ma-plot.svg"],
                contrast=config["diffexp"]["contrasts"]),
         "results/pca.svg",
@@ -43,7 +43,8 @@ report: "report/workflow.rst"
 ##### load rules #####
 
 include: "rules/common.smk"
-include: "rules/trim.smk"
+#include: "rules/trim.smk"
+include: "rules/bbduk.smk"
 include: "rules/align.smk"
 include: "rules/diffexp.smk"
 include: "rules/qc.smk"

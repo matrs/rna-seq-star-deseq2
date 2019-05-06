@@ -1,8 +1,6 @@
 
 ## RSEQC
 
-gtf_bed_script="/rhome/jluis/bigdata/Tutorials/rna-seq_yeast/Mulla_elife_2017/subsample/rna-seq-star-deseq2/gtf2bed_eautils.pl"
-
 rule rseqc_gtf2bed:
     input:
         config["ref"]["annotation"]
@@ -13,11 +11,10 @@ rule rseqc_gtf2bed:
         "logs/rseqc_gtf2bed.log"
     conda:
         "../envs/gffutils.yaml"
-    #shell
     script:
-        #"perl {gtf_bed_script} {input} > {output.bed}"
         "../scripts/gtf2bed.py"
-
+       
+  
 rule rseqc_junction_annotation:
     input:
         bam="star/{sample}-{unit}/Aligned.out.bam",
@@ -149,6 +146,23 @@ rule rseqc_readgc:
         "read_GC.py -i {input} -o {params.prefix} > {log} 2>&1"
 
 
+#shell.prefix("""
+## http://linuxcommand.org/wss0150.php
+#PROGNAME=$(basename $0)
+#
+#function error_exit
+# {{
+# #   ----------------------------------------------------------------
+# #   Function for exit due to fatal program error
+# #       Accepts 1 argument:
+# #           string containing descriptive error message
+# #   ----------------------------------------------------------------
+#     echo "${{PROGNAME}}: ${{1:-"Unknown Error"}}" 1>&2
+#         exit 1
+#	 }}
+#	 """)
+#
+#print("unit.sample and unit.unit: ", snakemake.rule.unput.unit.sample, "{unit.unit}", sep=" |||| ")
 
 rule multiqc:
     input:
@@ -163,8 +177,8 @@ rule multiqc:
         expand("qc/rseqc/{unit.sample}-{unit.unit}.readdup.DupRate_plot.pdf", unit=units.itertuples()),
         expand("qc/rseqc/{unit.sample}-{unit.unit}.readgc.GC_plot.pdf", unit=units.itertuples()),
         expand("logs/rseqc/rseqc_junction_annotation/{unit.sample}-{unit.unit}.log", unit=units.itertuples()),
-        #expand("logs/cutadapt/{unit.sample}-{unit.unit}.log", unit=units.itertuples()),
-        expand("trimmed/{unit.sample}-{unit.unit}.qc.txt", unit=units.itertuples())
+        expand("trimmed/{unit.sample}-{unit.unit}.qc.txt", unit=units.itertuples()),
+        #print("unit.sample and unit.unit: ", "unit.sample", "{unit.unit}", sep=" |||| ")
     output:
         "qc/multiqc_report.html"
     log:

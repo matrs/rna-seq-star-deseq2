@@ -22,11 +22,9 @@ pca:
 diffexp:
   # contrasts for the deseq2 results method
   contrasts:
-    AMB-Ctrl:
+    AMB-LFplusAMB:
       - AMB
-      - AMB_control
       - AMBplusLF
-      - AMBplusLF_control
 params:
   star: ""
   cutadapt-se: "-j 5"
