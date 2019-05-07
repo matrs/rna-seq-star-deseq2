@@ -9,7 +9,7 @@ print("snakemake.input: ", snakemake.input)
 print("snakemake.output: ",snakemake.output)
 print("snakemake.log, snakemake.log[0] and their types: ",snakemake.log,snakemake.log[0], type(snakemake.log), type(snakemake.log[0]))
 
-counts = [pd.read_table(f, index_col=0, usecols=[0, 2], header=None, skiprows=4)
+counts = [pd.read_table(f, index_col=0, usecols=[0, 1], header=None, skiprows=4)
           for f in snakemake.input]
 print("length of `counts` list and head of its two 1st elements: ", len(counts), counts[0].head(),
       counts[1].head(), sep="\n\n")
