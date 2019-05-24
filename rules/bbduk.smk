@@ -19,6 +19,6 @@ rule bbduk_trim_pe:
     threads:
         4
     shell:
-        "bbduk.sh {params.memory} {input} out1={output.fastq1} out2={output.fastq2} ref={params.ref} "
-        "stats={output.stats} ktrim=r k=23 mink=11 hdist=1 {params.extra} t={threads} " 
-        "--overwrite pigz=f unpigz=f 2> {log}"
+        "bbduk.sh {params.memory} {input} out1={output.fastq1} out2={output.fastq2} "
+        "ref={params.ref} stats={output.stats} ktrim=r k=23 mink=11 hdist=1 " 
+        "{params.extra} t={threads} --overwrite pigz=f unpigz=f 2> {log}"
