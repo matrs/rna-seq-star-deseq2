@@ -34,3 +34,5 @@ params:
   star: ""
   cutadapt-se: "-j 5"
   cutadapt-pe: "-j 5"
+  multiqc: --fullnames --title "RNA-Seq STAR-DESeq2" 
+           --comment "RNA-Seq pipeline, composed by STAR for mapping and quantification at the gene level, and DESeq2 for differential expression analysis"
