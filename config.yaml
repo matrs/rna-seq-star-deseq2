@@ -9,8 +9,8 @@ units: units.tsv
 adapter: ACGGATCGATCGATCGATCGAT
 
 ref:
-  # the STAR index
-  index: "/rhome/jluis/bigdata/Tutorials/rna-seq_yeast/Mulla_elife_2017/star_index"
+  # the STAR index 
+  index: "/rhome/jluis/bigdata/Tutorials/rna-seq_yeast/Pang_Sci-Reports_2016/star_index"
   # gtf file with transcripts
   annotation: "/rhome/jluis/bigdata/Tutorials/rna-seq_yeast/Mulla_elife_2017/references/Saccharomyces_cerevisiae.R64-1-1.84.gtf"
 
