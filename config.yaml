@@ -10,7 +10,8 @@ samples: samples.tsv
 units: units.tsv
 
 # the sequencing adapter
-adapter: ACGGATCGATCGATCGATCGAT
+adapter: "/rhome/jluis/bigdata/Miniconda3/envs/bif/opt/bbmap-38.22-0/resources/adapters.fa"
+
 
 ref:
   # the STAR index 
