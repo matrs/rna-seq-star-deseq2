@@ -20,5 +20,6 @@ rule bbduk_trim_pe:
         4
     shell:
         "bbduk.sh {params.memory} {input} out1={output.fastq1} out2={output.fastq2} "
-        "ref={params.ref} stats={output.stats} ktrim=r k=23 mink=11 hdist=1 ftm=5 qtrim=rl "
-        "trimq=10 minlen=80 {params.extra} t={threads} --overwrite pigz=f unpigz=f 2> {log}"
+        "ref={params.ref} stats={output.stats} ktrim=r k=23 mink=11 hdist=1 hdist2=0 "
+        "ftm=5 qtrim=rl trimq=10 minlen=50 {params.extra} t={threads} --overwrite "
+        "pigz=f unpigz=f 2> {log}"
